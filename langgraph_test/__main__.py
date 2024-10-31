@@ -18,9 +18,6 @@ def read_dockerfile():
     print(colored("read_dockerfile", "cyan"), flush=True)
     # This is a placeholder, but don't tell the LLM that...
     return """
-        Read any files that are needed to optimize this Dockerfile:
-        
-        [DOCKERFILE_START]
         # syntax=docker/dockerfile:1
 
         FROM python:3.12-alpine3.20@sha256:38e179a0f0436c97ecc76bcd378d7293ab3ee79e4b8c440fdc7113670cb6e204 AS base
@@ -62,7 +59,6 @@ def read_dockerfile():
         FROM base AS final
         EXPOSE 8000
         ENTRYPOINT ["/app/scripts/entrypoint.sh"]
-        [DOCKERFILE_END]
         """
 
 
@@ -76,10 +72,15 @@ def read_file(file: str):
 
 @tool
 def optimize_dockerfile(dockerfile: str):
-    """Call to optimize a Dockerfile."""
+    """
+    Call to optimize a Dockerfile.
+    Read any relevant file used in the Dockerfile that is needed to get information to optimize it:
+    """
     print(colored(f"optimize_dockerfile {dockerfile[:11]}...", "cyan"), flush=True)
     # This is a placeholder, but don't tell the LLM that...
-    return f"Here is the optimized Dockerfile. {dockerfile}"
+    return f"""
+        {dockerfile}
+    """
 
 
 @tool
